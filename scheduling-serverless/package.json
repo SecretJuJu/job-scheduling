@@ -1,0 +1,15 @@
+{
+  "name": "scheduling-notify-by-sqs",
+  "version": "1.0.0",
+  "description": "Serverless Framework Node SQS Producer-Consumer on AWS",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-lift": "^1.1.2",
+    "serverless-step-functions": "^3.21.0"
+  }
+}

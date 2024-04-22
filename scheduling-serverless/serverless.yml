@@ -1,0 +1,47 @@
+service: job-scheduler
+
+useDotenv: true
+
+provider:
+  name: aws
+  region: ${env:QUEUE_REGION}
+  profile: job-scheduler
+  environment:
+    AWS_REGION: ${env:QUEUE_REGION}
+    QUEUE_URL: ${env:QUEUE_URL}
+    QUEUE_NAME: ${env:QUEUE_NAME}
+
+resources:
+  Resources:
+    MyQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${env:QUEUE_NAME}
+
+stepFunctions:
+  stateMachines:
+    waitForSQSTrigger:
+      name: WaitForSQSTrigger
+      definition:
+        Comment: "Wait for a specified time and then send a message to SQS"
+        StartAt: WaitNSeconds # N 초를 기다린 후 SQS로 메시지를 보냅니다.
+        States:
+          WaitNSeconds:
+            Type: Wait
+            SecondsPath: "$.waitTime" # payload 에서 waitTime 값을 가져와서 사용합니다.
+            Next: SendToSQS
+          SendToSQS:
+            Type: Task
+            Resource: "arn:aws:states:::sqs:sendMessage.waitForTaskToken"
+            Parameters:
+              QueueUrl: ${env:QUEUE_URL}
+              MessageBody: "Step Function completed wait and triggered SQS"
+            End: true
+
+plugins:
+  - serverless-step-functions
+  - serverless-dotenv-plugin
+
+custom:
+  dotenv:
+    path: .env
