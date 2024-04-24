@@ -30,6 +30,7 @@ const main = async () => {
 
   const id = uuid();
   const afterMinutes = 5;
+  // 참고용
   const scheduleExpressionFormat = 'yyyy-mm-ddThh:mm:ss';
   const scheduleExpressionFormatDayjs = 'YYYY-MM-DDTHH:mm:ss';
 
@@ -40,6 +41,7 @@ const main = async () => {
     Name: `test-${id}`,
     State: 'ENABLED',
     ScheduleExpression: `at(${dayjs().add(afterMinutes, 'minute').format(scheduleExpressionFormatDayjs)})`,
+    ScheduleExpressionTimezone: 'UTC+09:00',
     Target: {
       Arn: SQS_QUEUE_ARN,
       Input: JSON.stringify({ default: 'test' }),
