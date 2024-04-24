@@ -1,0 +1,26 @@
+{
+  "name": "event-bridge-scheduler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "tsc",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@aws-sdk/client-scheduler": "^3.556.0",
+    "@aws-sdk/client-sqs": "^3.556.0",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/uuid": "^9.0.8",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
